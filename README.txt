@@ -1,2 +1,2 @@
 COMING SOON
-https://aliatillaydemir.github.io/
+(https://aliatillaydemir.github.io/)
