@@ -1,2 +1,3 @@
-COMING SOON
-(https://aliatillaydemir.github.io/)
+COMING SOON...
+
+[web page](https://aliatillaydemir.github.io/)
