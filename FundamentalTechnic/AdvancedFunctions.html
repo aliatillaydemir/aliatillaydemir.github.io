@@ -44,30 +44,415 @@
 						<!-- Post -->
 							<section class="post">
 				
+								<header class="major">
+									<h1>Advanced 
+										Functions</h1>
+								</header>
 
+								<br/><br/>
 
 						<!-- Preformatted Code -->
-									<h2>Preformatted</h2>
-									<pre><code>i = 0;
+									<h2>Filter</h2>
+									<p>filter(){} does the filtering. Filtering is one of the most popular tasks in collection processing. 
+										Filter is a condition element. These functions leave the original collection unchanged, so they are available for both 
+										mutable and read-only collections.</p>
+									<pre><code>
+	
+fun main(args: Array<String>) {
 
-while (!deck.isInOrder()) {
-    print 'Iteration ' + i;
-    deck.shuffle();
-    i++;
+val list = listOf<Int>(1,4,6,7,9)
+									
+val selectedList = list.filter { number -> number < 5 } // {it<5}
+									
+for(number in selectedList){
+println(number)
 }
-
-print 'It took ' + i + ' iterations to sort the deck.';
+									
+}			
+</code></pre>
+<pre><code>
+Output: 
+1
+4
 </code></pre>
 
+<br/><br/><br/>
 
 
+								<!-- Preformatted Code -->
+								<h2>MAP</h2>
+								<p>Unlike filter, map changes the values of the list.</p>
+								<pre><code>
+fun main(args: Array<String>) {
+
+	val list = listOf<Int>(1,2,4,5,7,8,9)
+									
+	val mapList = list.map { it+it }
+									
+	for (map in mapList){
+	println(map)
+	}					
+}
+
+</code></pre>
+<pre><code>
+Output:
+2
+4
+8
+10
+14
+16
+18
+</code></pre>
+<li>For map operations, it's better to define lists as val because they are not modified.</li>
+<br/><br/><br/>
+
+								<!-- Preformatted Code -->
+								<h2>filter and map combination</h2>
+								<p>Filter and Map can be used together.</p>
+								<pre><code>
+fun main(args: Array<String>) {
+
+	val person = listOf<People>(
+	People("Attila Hun",23,"Male"),
+	People("Khaleesi the queen <3",24,"Female"),
+	People("Homelander",33,"Transgender"),
+	People("Sauron",323,"Genderqueer"),
+	People("Galadriel",250,"Cisgender"),
+	People("Gandalf",273,"Genderfluid")
+	)
+									
+	val listCombine = person.filter{pers -> pers.age> 240}
+		.map { perso -> perso.gender }
+									
+	for(i in listCombine){
+	println(i)
+	}
+									
+}
+
+data class People(val name: String, val age: Int, val gender: String)
+
+</code></pre>
+<pre><code>
+Output:
+Genderqueer
+Cisgender
+Genderfluid
+</code></pre>
+<li>Filter and map are generally used when getting data from API.
+	filtered, formatted and transformed into the desired format.
+	The goal is to prepare objects.</li>
+
+<br/><br/><br/>
+
+								<!-- Preformatted Code -->
+								<h2>let</h2>
+								<p>"let" takes the object it is invoked upon as the parameter and returns the result of the lambda expression. Kotlin let is a scoping function wherein the variables declared inside the expression cannot be used outside. let is usually used for nullable types.</p>
+								<pre><code>
+private var numb: Int? = null  
+
+	fun main(args: Array<String>) {
+									
+		numb?.let {
+		val numb2 =it+1    //using val over var is preferable because the variable defined cannot be used outside the scope of let. Using val is more correct in terms of its structure.
+		println(numb2)
+		}
+									
+}
+</code></pre>
+<pre><code>
+Output:
+//Empty
+	
+</code></pre>
+
+<br/><br/><br/>
+
+
+								<!-- Preformatted Code -->
+								<h2>sample II</h2>
+								<pre><code>
+private var numb: Int? = 8
+
+	fun main(args: Array<String>) {
+									
+		numb?.let {
+		val numb2 =it+1
+		println(numb2)
+		}
+					
+	}
+</code></pre>
+<pre><code>
+Output:
+9
+</code></pre>
+<li>"let" can be used when getting unpredictable data from the API.</li>
+
+<br/><br/><br/>
+
+								<!-- Preformatted Code -->
+								<h2>sample III</h2>
+								<p>It would be good to put a question mark before the .let, otherwise it may be necessary to use it in the steps inside. Since ". let" is a method based on working with null, it is better to put the question mark at the beginning.</p>
+								
+								<pre><code>
+private var numb: Int? = 8
+
+	fun main(args: Array<String>) {
+										
+	val num = numb?.let { value ->
+	value + 1
+	}
+	
+	println(num)
+	}
+</code></pre>
+<pre><code>
+Output:
+9
+</code></pre>
+<p>- Lambda usage is shown in the above code.</p>
+
+<br/><br/><br/>
+
+								<!-- Preformatted Code -->
+								<h2>let and null value</h2>
+								<pre><code>
+private var numb: Int? = null
+
+	fun main(args: Array<String>) {
+									
+		val num = numb?.let { value ->
+		value + 1
+		} ?:0
+										
+	println(num)
+									
+	}
+</code></pre>
+<pre><code>
+Output:
+0
+</code></pre>
+<li>if let{} ?:0 is set to null then the value can be set to zero.</li>
+
+<br/><br/><br/>
+
+								<!-- Preformatted Code -->
+								<h2>also</h2>
+								<p>With "also", things to do can be placed between the corresponding bracket. Multiple operations can be performed in a single line.</p>
+								<pre><code>
+
+fun main(args: Array<String>) {
+
+	val ati = Person("Ati",31)
+	val leo = Person("Leo",64)
+	val shiv = Person("Shiv",21)
+									
+	val people = listOf<Person>(ati,leo,shiv)
+									
+	people.filter { it.age>28 }.also { 
+		for (per in it){
+		println(per.name)
+		}
+	}
+}
+									
+data class Person (var name:String, var age:Int)				
+</code></pre>
+<pre><code>
+Output:
+Ati
+Leo
+</code></pre>
+
+<br/><br/><br/>
+
+								<!-- Preformatted Code -->
+								<h2>apply</h2>
+								<p>Kotlin apply is an extension function on a type. It runs on the object reference (receiver) into the expression and returns the object reference on completion.</p>
+								<pre><code>
+fun main(args: Array<String>) {
+
+	val person = Person("ati",24)
+										
+	person.apply { this.age = 13 }
+		println(person)
+}
+									
+data class Person(var name: String, var age : Int)					
+</code></pre>
+<pre><code>
+Output:
+Person(name=ati, age=13)
+</code></pre>
+
+<br/><br/><br/>
+
+								<!-- Preformatted Code -->
+								<h2>apply and also</h2>
+								<p>apply and also can be used together.</p>
+								<pre><code>
+fun main(args: Array<String>) {
+
+	Person("ari",12).apply {
+		name = "ARI"
+	}.also {
+		println(it.name)
+	}
+										
+}
+									
+data class Person(var name: String, var age : Int)
+</code></pre>
+<pre><code>
+Output:
+ARI
+</code></pre>
+
+<br/><br/><br/>
+
+								<!-- Preformatted Code -->
+								<h2>apply sample II</h2>
+								<pre><code>
+fun main(args: Array<String>) {
+
+	val person = Person("ari",12).apply {
+		name = "ARI"
+	}
+	
+	println(person.name)
+										
+}
+									
+data class Person(var name: String, var age : Int)
+</code></pre>
+<pre><code>
+Output:
+ARI
+</code></pre>
+
+<br/><br/><br/>
+
+								<!-- Preformatted Code -->
+								<h2>with</h2>
+								<p>The class/object is put inside the with function. Since this function returns unit type it might be better to put the variable.</p>
+								<pre><code>
+fun main(args: Array<String>) {
+
+	val pers = with(Person("Ari",13)){
+		name = "ARI"
+	}
+									
+	println(pers.name)  // unit type x. no return.
+									
+}
+									
+data class Person(var name: String, var age : Int)
+</code></pre>
+<pre><code>
+Output:
+//unit type
+</code></pre>
+
+<br/><br/><br/>
+
+								<!-- Preformatted Code -->
+								<h2>sample II</h2>
+								<pre><code>
+fun main(args: Array<String>) {
+    
+    val pers = Person("Ari",13)
+
+    with(pers){
+        name = "ARI"
+        age = 43
+    }
+
+    println(pers.name + " " + pers.age)
+
+}
+
+data class Person(var name: String, var age : Int)
+
+</code></pre>
+<pre><code>
+Output:
+ARI 43
+</code></pre>
+
+<br/><br/><br/>
+
+<!-- Table -->
+<h2>Function selection</h2>
+<br/>
+<div class="table-wrapper">
+	<table>
+		<thead>
+			<tr>
+				<th>Function</th>
+				<th>Object reference</th>
+				<th>Return value</th>
+				<th>Is extension function</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>let</td>
+				<td>it</td>
+				<td>Lambda Result</td>
+				<td>Yes</td>
+			</tr>
+			<tr>
+				<td>run</td>
+				<td>this</td>
+				<td>Lambda Result</td>
+				<td>Yes</td>
+			</tr>
+			<tr>
+				<td>run</td>
+				<td>-</td>
+				<td>Lambda Result</td>
+				<td>No: called without the context object</td>
+			</tr>
+			<tr>
+				<td>with</td>
+				<td>this</td>
+				<td>Lambda Result</td>
+				<td>No: takes the context object as an argument.</td>
+			</tr>
+			<tr>
+				<td>apply</td>
+				<td>this</td>
+				<td>Context object</td>
+				<td>Yes</td>
+			</tr>
+			<tr>
+				<td>also</td>
+				<td>it</td>
+				<td>Context object</td>
+				<td>Yes</td>
+			</tr>
+		</tbody>
+		
+	</table>
+</div>
+
+
+
+
+<br/><br/><br/>
+<p>-> Some good resources on the subject:</p>
+<li><a href="https://kotlinlang.org/docs/scope-functions.html" style="color:blue">kotlinlang.org</a>    
+<br/>
+<li><a href="https://www.digitalocean.com/community/tutorials/kotlin-let-run-also-apply-with#kotlin-let" style="color:blue">digitalocean</a>
 
 							</section>
 
 					</div>
 
-
-					
 
 
 				<!-- Footer -->
