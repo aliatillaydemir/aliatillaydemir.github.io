@@ -1,0 +1,1112 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>AttiTech-Software</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="/assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="Collections.html" class="logo">Refresh</a>
+					</header>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="/index.html">Main/Project Page</a></li>
+							<li class="active"><a href="/generic.html">fundamental software</a></li>
+							<li><a href="/information.html">information</a></li>
+							<li><a href="/elements.html">Template</a></li>
+						</ul>
+						<ul class="icons">
+	     <!-- 		        <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+							<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>  -->
+							<li><a href="https://www.linkedin.com/in/atilla-aydemir" target="_blank" class="icon brands fa-linkedin"><span class="label">Linkedin</span></a></li>
+							<li><a href="https://github.com/aliatillaydemir" target="_blank" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+				
+
+
+		<p>
+            COMPANION OBJECT---------------------------------------------------------
+            
+            kotlin'de static properties ve static fonksiyonlar oluşmasına izin verilmez.
+            Java'da verilirdi. Bunun için "Companion Object" kavramı kullanılır.
+            Companion Object içerisinde sınıfta static olmasını istediğimiz Constants,
+            Properties, Functions tanımlayıp rahatça kullanabiliriz.
+            
+            class Foo {
+            
+                public static Foo instance;
+                public Foo() {
+                    instance = this;
+                }
+            
+            }
+            
+            -javada bu şekilde olan metod, kotlinde şu şekilde tanımlanır:
+            
+            class Foo {
+            
+                companion object {
+                    lateinit var instance: Foo
+                }
+            
+                init {
+                    instance = this
+                }
+            
+            }
+            
+            
+            
+            Class’ı tekil(singleton) halde kullanabilmeyi sağlamak için companion
+            object'i kullanırız.
+            
+            class Car(val horsepowers: Int) {
+                companion object Factory {
+                    val cars = mutableListOf<Car>()
+            fun makeCar(horsepowers: Int): Car {
+                        val car = Car(horsepowers)
+                        cars.add(car)
+                        return car
+                    }
+                }
+            }
+            
+            Companion Object tek bir nesnedir ve üyelerine, içerdiği sınıfın adı 
+            aracılığıyla doğrudan erişebiliyoruz. 
+            
+            val car = Car.makeCar(150)
+            println(Car.Factory.cars.size)
+            
+            
+            Kısaca Companion Object’i şu şekilde aklımıza kazıyabiliriz :
+            
+            Companion Object içinde tanımlı olan nesneler başka programlama dillerindeki 
+            (Java, C#) statik üyelere benzemektedir. Aslında Companion Object çalışma 
+            zamanında gerçek nesnelerin üyeleridir ve bu nedenle bir Interface’i 
+            realized ederken bile kullanabiliyoruz.
+            
+            ----------------------------------------------------------------------------
+            
+            -> coroutineler kullanılacağı zaman suspend fonksiyon kullanılır.
+            -> ya da Scope.launch{} ile courutine scop'u oluşturulup kodlar yazıalbilir.
+            
+            -------------------------------------------------------------------------
+            
+            state'ler değişiklik olduğunda recompose için gereklidir.
+            
+            -------------------------------------------------------------------------
+            
+            Flows -> livedata yerine kullanılıyor.
+            
+            Coroutinler içinde çalışıyorlar. multiple değer emit'leyebilen(yayabilen)
+            yapılardır. suspend'de tek döndürebiliyoruz. veri tabanından canlı güncelle-
+            meler alıp kullanabiliyoruz örneğin. javada yok, kotlinde var.
+            
+            retrofitle veri çekerken flow kullanılabilir.
+            
+            livedata-flow farkı ne?
+            hemen hemen aynı eşyleri yapabiliyoruz ama flow biraz daha kullanım alanı 
+            geniş.
+            
+            flow operatörler gibi...
+            
+            flow operatörleri: map, filter, collect...
+            https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/
+            
+            flowların türleri vardır.
+            stateflow, sharedflow gibi...
+            
+            stateflow da bir sharedflowdur. sharedflowu alıp kendimiz konfigüre ederiz.
+            böyle bir yapıdır. böyle bir şeye gerek yoksa stateflow ya da flow kullanıla
+            bilir.sharedflow kullanılacaksa inital bir değer verilmeldir.
+            
+            https://developer.android.com/kotlin/flow/stateflow-and-sharedflow
+            
+            
+            -StateFlow, uygulamanız arka plandayken aktif kalacaktır, ancak küçük bir 
+            kurulumla LiveData'yı StateFlow olarak yapabilirsiniz.
+            
+            -stateflow initial değerinin olmasına ihtiyaç duyar, live data ise 
+            duymaz, opsiyoneldir.
+            
+            -eğer bir initial(yani başlangıç) değeri varsa stateflow kullanmak daha 
+            doğrudur.
+            
+            -Stateflow ile Flow operatörlerini kullanabilirsiniz ve bu LiveData ile 
+            yapamayacağınız bir şeydir, LiveData'yı Flow ile kullanmak istiyorsanız 
+            daha fazlasına ihtiyacınız vardır.
+            
+            -------------------------------------------------------------------
+            
+            init{} metodu classın özelliklerini alır(contructor gibi ama biraz farklı).
+            
+            init bloğu, primary constructor'dan hemen sonra yürütülür.
+            initilazer blokları etkin bir şekilde primary constructor'ın bir parçası 
+            haline gelir. constructor secondary constructor'dır. primary constructor'a 
+            delegasyon, 
+            secondary constructor bir kurucunun ilk ifadesi olarak gerçekleşir, bu 
+            nedenle tüm başlatıcı bloklarındaki kod, ikincil kurucu gövdesinden önce 
+            yürütülür. 
+            
+            class Sample(private var s : String) {
+                constructor(t: String, u: String) : this(t) {
+                    this.s += u
+                }
+                init {
+                    s += "B"
+                }
+            }
+            
+            
+            Sample("T","U")
+            
+            çıktı: "TBU". önce init, sonra constructor çağırıldı, aralarıdnaki fark bu.
+            T primary constructor(görmüyoruz) olduğu için en önce o çağırıldı.
+            
+            https://www.geeksforgeeks.org/how-to-initialize-constructor-in-kotlin/
+            
+            
+            -> bir classta birden fazla init bloğu kullanabiliriz ama tek bir tane 
+            kullanılarsa daha iyi olur.
+            
+            ---------------------------------------------------------------------
+            
+            jetpack'daki lazyColumn kotlin ve javadaki recyclerView'dır.
+            
+            ----------------------------------------------------------------------
+            
+            compose'da side effects:
+            
+            uygulamanın state'inde değişiklik yapan ama aynı zamanda composoble 
+            scopeunun dışında olan şeyler. böyle bir durumda loopa girme gibi hatalar 
+            olabiliyor.recomposition'a yok açarak, sürekli baştan açma durumunda buglar
+            meydana gelir.
+            
+            sorunu çözmek için LaunchedEffect kullanılabilir. launchEffect sayesinde
+            sadece bir defa istek gönderildiğini anlar ve böyle arkada sürekli istek 
+            gönderme, yani loop durumu meydana gelmez.
+            
+            LaunchedEffect(key1 = Unit){ //this: CoroutineScope
+            bla bla...
+            }
+            
+            produceState de bu sorunu çözer.
+            
+            produceState non-compose state'leri compose statelere çevirir.
+            
+            val x = produceState<T>(initialValue = ""){ //this: ProduceState
+            
+            value = x bla bla...
+            
+            }
+            
+            
+            DisposableEffect -> callbacklerle önceki verileri kaldırma gibi işler yapar.
+            böylelikle bahsedilen looplardan kurtulmuş olunur. 
+            
+            bu effectleri ele alma biçimine effect handlers denir.
+            
+            --------------------------------------------------------------------------
+            
+            coroutine:
+            
+            Bir ağ isteği attığımızda, local databaseden bir veri isteği yaptığımızda 
+            veya daha genel olarak threadde uzun sürecek bir işlem yaptığımızda 
+            imdadımıza main threadi kitlememek ve kesintisiz akışı kesmemek için 
+            coroutineler yetişiyor. Coroutinesleri threadde yapılan işlemin yapıldığı 
+            iş parçacıkları olarak düşünebiliriz.Genel olarak Lightweight Thread olarak 
+            tanımlanıyor. Bu konuda şuraya özellikle vurgu yapmak istiyorum; Threadlere 
+            benzer olmalarına rağmen coroutinesleri kullanarak yeni bir threadde iş 
+            yapmış olmuyoruz. Zaten coroutineslerin bu kadar popüler yapanda o. Çünkü 
+            yeni bir thread açmak çok maliyetli bir işlem. Out of memory hatası 
+            almamıza yol açabilir. Fakat coroutinesler threadlere göre çok daha light 
+            yapılar olduğu için daha az enerji harcayarak daha çok iş yaparlar.
+            Yani Mevcut threadi bloklamadan askıya alınma işlevini sağlarlar.
+            
+            suspend 
+            
+            Suspend Fonksiyonlar, normal bir fonksiyon yazmak gibidirler. 
+            Tek farkı sadece suspend keywordu getirilerek başlatırlar. İçerisinde 
+            coroutines çalıştırılabilen fonksiyonlardır. İstediğimiz zaman durdurup,
+            devam ettirip ve bitirebiliriz. Burada dikkat edilmesi gereken nokta 
+            suspend fonksiyonları ya bir suspend fonksiyon içerisinden veya coroutine 
+            içerisinden çağırabiliriz.
+            
+            suspend fun introduceYourself(){
+                delay(2000)
+                coroutineScope {
+                    launch {
+                        println("Merhaba ben suspend fonksiyonum.")
+                    }
+                }
+            }
+            
+            
+            Coroutine Dispatchers
+            
+            Coroutinelerimizi farklı threadlerde çalıştırmayı sağlar. Yapacağımız 
+            işlemin niteliğine göre dispatchersla hangi threadde olacağını belirteceğiz.
+            
+            Dispatchers.Default : CPU kullanımın yoğun olduğu işlerde kullanılır.
+            Örneğin görüntü işleme gibi ya da çok uzun bir dizinin içinden bir 
+            filtreleme yapmak gibi işlerde kullanılır.
+            
+            Dispatchers.IO : Networking işlemlerinde kullanılır. Örneğin internetten bir
+            veri çekmek veya databaseden veri almak gibi işlemlerde kullanılır.
+            
+            Dispatchers.Main : UI ile ilgili yaptığımız işlemler için kullanılır. 
+            Örneğin IO’da yaptığımız bir işi mainle gösterebiliriz. İnternetten veri 
+            çekerekn IO’yu, bu veriyi kullanıcıya UI’da gösterirken Main’i 
+            kullanabiliriz.
+            
+            ----------------------------------------------------------------------------
+            
+            Sealed Class(mühürlü sınıflar)
+            
+            -türetilemezler(çünkü soyutlardır). 
+            -Enum classların daha gelişmiş halleridir
+            
+            Nesneye dayalı programlama yaklaşımında kalıtım (inheritence) özelliği 
+            sayesinde bir sınıftan başka sınıflar türetilebilir ve bu sınıflara yeni 
+            özellikler eklenerek daha zengin ve kullanışlı sınıflar yaratılabilir. 
+            Ancak bazı durumlarda sınıflardan türetme yapılması istenmez. Bu durumda 
+            sınıf tanımlamasının başına mühürlü (sealed) kelimesi getirilir. Bu sayede 
+            sabit özellikler ve metotlara sahip bir sınıf elde edilir. Mühürlü 
+            sınıf (sealed class) hiçbir sınıfın kendisinden türetilemeyeceğini ifade 
+            eder.
+            
+            Türeyen sınıfın anlamsız olmasının engellenmesi, bazı üyelerin güvenliğinin 
+            sağlanması ya da üyeleri statik olan sınıfların korunması amacıyla 
+            türetilme yapılmaması için sealed (mühürlü) anahtar kelimesi kullanılarak 
+            mühürlü sınıflar (sealed class) oluşturulur. 
+            
+            Enumlarda parametresiz çağırma gerçekleşemez.  Enumlar tek tür veri 
+            tipi tutabilir. Ayrıca Enumlarda parametre varsa tüm değerler oluşturma 
+            anında set edilmeli, bu durum da kapsülleme yaparken ihtiyacımız dışındaki 
+            alanların set edilmesini zorunlu kılıyor. bu da clean code açısından doğru
+            değil. Sealed class'ta ise bu bir problem olmaktan çıkıyor.
+            
+            -Çünkü Enumlar tek bir değişken tipi tutabiliyorken Sealed Sınıflar her 
+            bir state için farklı değişken tipi tutabilirler.
+            
+            ---------------------------------------------------------------------------
+            
+            Data Class
+            
+            Data Class’lar verileri depolamak için kullanılan özel sınıflardır ve 
+            data anahtar sözcüğüyle tanımlanırlar. Data Class’larda getter ve setter 
+            metotları, hashCode(), equals(), toString(), copy() metotlarını 
+            kendiliğinden üretir.
+            
+            Enum Class
+            
+            Kullanıcı tarafından tanımlanan veri kümeleri için enum class‘lar 
+            kullanılabilir
+            
+            Singleton Class(object ya da companion object)
+            
+            Singleton class singleton nesnesi olarak da adlandırılabilir. 
+            Bir sınıftan "yalnızca bir örnek" oluşturmak ve bunu bu haliyle her yerde 
+            kullanmak istediğimizde bu yolu izleyebiliriz. Class anahtar sözcüğü yerine 
+            object anahtar sözcüğünü kullanırız.
+            
+            object Calculate {
+                fun multiplying(number1: Int, number2: Int): Int {
+                    return number1 * number2
+                }
+            }
+            
+            ---------------------------------------------------------------------------
+            
+            DataStore
+            
+            Shared Preferences(deprecated ama androidx kütüphanesiyle kullanılabilir,
+            android documanda geleneksel olarak hala öneriliyor.) yerine kullanılabilir. 2 adet dataStore var. Preference DataStore ve 
+            proto dataStore. bu ikisi çok benzer ama ufak farklılıkları var.
+            
+            
+            preference datastore -> proto gibi type safe değildir.
+            
+            
+            proto datastore -> type safe'dir. biraz komplekstir. 
+            setup kurmak ve basit verileri kaydetmek için model kurmak gerekir. 
+            bu yüzden bunu kullanmak(type safe'e ihtiyaç varsa özellikle) yerine room 
+            kullanmak daha iyi bir fikir olabilir.
+            
+            
+            ----------------------------------------------------------------------------
+            
+            Type Safety
+            
+            Type-Safety, “tür güvenliği” olarak çevirilebilir. yazılımda kullanılan bir 
+            terimdir. Tür güvenliği, derleyici derleme sırasında türleri doğrulayacak 
+            ve biz bir değişkene yanlış tür atamayı denersek hata vereceği anlamına 
+            gelir. Örneğin C#, C++, Java type-safe bir dildir. Java’da bir değişken 
+            tanımlamak istediğimizde o değişkenin hangi veri tipinde bir değişken 
+            olduğunu belirtmek zorundayız. Mesela  PHP, JavaScript ve diğer dynamic 
+            scripting dillerinde bu durum söz konusu değildir. JavaScript’de bir 
+            değişken tanımladığımızda bu değişkenlere bir tip atamak zorunda değiliz, 
+            yani bir seferinde o değişkene sayı atayıp sonrasında aynı değişkene 
+            karakter atayabiliriz. 
+            
+            
+            ----------------------------------------------------------------------------
+            
+            instance
+            
+            Kısaca nesne denebilir.
+            Bir evin tasarım planı,bir sınıfı ifade etsin(Class). Bu plandan inşa edilen
+            tüm evler, bu sınıfın nesneleridir(Object). Ve her bir ev de birer 
+            örnektir(Instance).
+            
+            ----------------------------------------------------------------------------
+            
+            Dependency Injection
+            
+            -dagger/hilt
+            
+            aslında bir tür design pattern'dır. bu patternin amacı verilen bir objenin 
+            variable'larının instance edilmesidir.
+            
+            
+            -Hilt kullanan tüm uygulamalar, @HiltAndroidApp annotasyonu içeren bir 
+            Application sınıfı içermelidir.
+            
+            @HiltAndroidApp
+            class ExampleApplication : Application() { ... }
+            
+            Bu oluşturulan Hilt bileşeni, Application nesnesinin yaşam döngüsüne eklenir 
+            ve ona bağımlılıklar sağlar. Ek olarak, uygulamanın ana bileşenidir; bu, 
+            diğer bileşenlerin sağladığı bağımlılıklara erişebileceği anlamına gelir.
+            
+            
+            Android sınıflarına bağımlılıkları enjekte etme:
+            
+            -Hilt, Application sınıfınızda ayarlandığında ve uygulama düzeyinde bir 
+            bileşen kullanılabilir olduğunda Hilt, @AndroidEntryPoint ek annotasyonuna
+            sahip diğer Android sınıflarına bağımlılıklar sağlayabilir:
+            
+            @AndroidEntryPoint
+            class ExampleActivity : AppCompatActivity() { ... }
+            
+            Hilt aşağıdaki Android sınıflarını desteklemektedir:
+            
+            Application (by using @HiltAndroidApp)
+            ViewModel (by using @HiltViewModel)
+            Activity
+            Fragment
+            View
+            Service
+            BroadcastReceiver
+            
+            @AndroidEntryPoint ile bir Android sınıfına açıklama eklerseniz, buna bağlı 
+            olan Android sınıflarına da açıklama eklemeniz gerekir. Örneğin, bir parçaya 
+            açıklama eklerseniz, o parçayı kullandığınız tüm aktivitelere de de açıklama 
+            eklemelisiniz.
+            
+            -Bir bileşenden bağımlılıklar elde etmek için, alan(field) enjeksiyonu 
+            gerçekleştirmek için @Inject ek açıklamasını kullanın:
+            
+            @AndroidEntryPoint
+            class ExampleActivity : AppCompatActivity() {
+            
+              @Inject lateinit var analytics: AnalyticsAdapter
+              ...
+            }
+            
+            Hilt'in enjekte ettiği sınıflar, enjeksiyon kullanan başka temel 
+            sınıflara da sahip olabilir. Bu sınıflar, soyutlarsa @AndroidEntryPoint 
+            ek açıklamasına ihtiyaç duymazlar.
+            
+            
+            Hilt bağlamları tanımlama(bindings):
+            
+            Alan(field) enjeksiyonunu gerçekleştirmek için Hilt'in ilgili bileşenden 
+            gerekli bağımlılıkların örneklerini nasıl sağlayacağını bilmesi gerekir. 
+            binding, bir türün örneklerini bir bağımlılık olarak sağlamak için gerekli 
+            bilgileri içerir. Hilt'e bağlama bilgisi sağlamanın bir yolu, constructor 
+            enjeksiyonudur. Hilt'e o sınıfın örneklerini nasıl sağlayacağını söylemek 
+            için bir sınıfın yapıcısında @Inject ek açıklaması kullanılır.
+            
+            class AnalyticsAdapter @Inject constructor(
+              private val service: AnalyticsService
+            ) { ... }
+            
+            
+            
+            
+            Hilt modüller:
+            
+            Bazen belli sebeplerden dolayı constructor injected yapamayız. Mesela bir 
+            interface'e constructor enjekte edemeyiz. ya da dışarıdan bir kütüphaneye
+            constructor ekleyemeyiz. böyle durumlarda  hilt modülleri kullanılır.
+            
+            Hilt modülü, @Module ile açıklamalı bir sınıftır. Bir Dagger modülü gibi, 
+            Hilt'e belirli türlerin örneklerinin nasıl sağlanacağını bildirir. Dagger 
+            modüllerinden farklı olarak, Hilt'e her modülün hangi Android sınıfında 
+            kullanılacağını veya kurulacağını söylemek için Hilt modüllerine @InstallIn 
+            ile açıklama eklemelisiniz.
+            
+            Hilt modüllerinde sağladığınız bağımlılıklar, Hilt modülünü kurduğunuz 
+            Android sınıfı ile ilişkilendirilmiş oluşturulan tüm bileşenlerden 
+            ulaşılabilir
+            
+            Inject interface instances with @Binds:
+            
+            sınıfınız bir arayüzse, onu constructor-enjekte edemezsiniz. Bunun yerine, 
+            Hilt modülü içinde @Binds ile açıklamalı soyut(abstract) bir işlev 
+            oluşturarak Hilt'e bağlama bilgilerini sağlayın.
+            
+            
+            
+            interface AnalyticsService {
+              fun analyticsMethods()
+            }
+            
+            // Constructor-injected, because Hilt needs to know how to
+            // provide instances of AnalyticsServiceImpl, too.
+            class AnalyticsServiceImpl @Inject constructor(
+              ...
+            ) : AnalyticsService { ... }
+            
+            @Module
+            @InstallIn(ActivityComponent::class)
+            abstract class AnalyticsModule {
+            
+              @Binds
+              abstract fun bindAnalyticsService(
+                analyticsServiceImpl: AnalyticsServiceImpl
+              ): AnalyticsService
+            }
+            
+            
+            @Provides ile instanceları enjekte etme:
+            Bir türü contructor enjekte edemediğiniz tek durum arayüzler değildir. 
+            Sınıfın harici bir kitaplıktan retrofit, OkHttpClient veya Room veritabanları
+            gibi sınıflar) geldiği için sınıfın sahibi değilseniz veya builder
+            modeliyle örneklerin oluşturulması gerekiyorsa, constructor ekleme de mümkün
+            değildir. Önceki örneği düşünün. AnalyticsService sınıfına doğrudan sahip 
+            değilseniz, Hilt modülü içinde bir işlev oluşturarak ve bu işleve 
+            @Provides ile açıklama ekleyerek Hilt'e bu tür örneklerin nasıl 
+            sağlanacağını söyleyebilirsiniz.
+            
+            
+            annotasyonlu fonksiyon Hilt'e aşağıdaki bilgileri sağlar:
+            
+            -fonksiyon return türü, Hilt'e fonksiyonun hangi türün nesnelerini 
+            sağladığını(provide ettiğini) söyler.
+            
+            -fonksiyon parametreleri Hilt'e karşılık gelen türün bağımlılıklarını söyler.
+            
+            -fonksiyon gövdesi, Hilt'e ilgili tipte bir instancesın nasıl sağlanacağını 
+            söyler. Hilt, bu türden bir instance sağlaması gerektiğinde fonksiyon 
+            gövdesini yürütür.
+            
+            
+            @Module
+            @InstallIn(ActivityComponent::class)
+            object AnalyticsModule {
+            
+              @Provides
+              fun provideAnalyticsService(
+                // Potential dependencies of this type
+              ): AnalyticsService {
+                  return Retrofit.Builder()
+                           .baseUrl("https://example.com")
+                           .build()
+                           .create(AnalyticsService::class.java)
+              }
+            }
+            
+            
+            Hilt component	      ---       Injector for
+            
+            SingletonComponent	        Application
+            ActivityRetainedComponent	N/A
+            ViewModelComponent	        ViewModel
+            ActivityComponent	        Activity
+            FragmentComponent	        Fragment
+            ViewComponent			View
+            ViewWithFragmentComponent	View annotated with @WithFragmentBindings
+            ServiceComponent		Service
+            
+            
+            Component lifetimes
+            
+            Hilt, ilgili Android sınıflarının yaşam döngüsünü takiben oluşturulan 
+            bileşen sınıflarının instanceları otomatik olarak oluşturur ve yok eder.
+            
+            
+            Generated component	   Created at		     Destroyed at
+            
+            SingletonComponent	   Application#onCreate()    Application destroyed
+            ActivityRetainedComponent  Activity#onCreate()	     Activity#onDestroy()
+            ViewModelComponent	   ViewModel created	     ViewModel destroyed
+            ActivityComponent	   Activity#onCreate()	     Activity#onDestroy()
+            FragmentComponent	   Fragment#onAttach()	     Fragment#onDestroy()
+            ViewComponent	           View#super()	             View destroyed
+            ViewWithFragmentComponent  View#super()	             View destroyed
+            ServiceComponent	   Service#onCreate()	     Service#onDestroy()
+            
+            
+            
+            https://developer.android.com/training/dependency-injection/hilt-android#kotlin
+            
+            ----------------------------------------------------------------------------
+            
+            
+            Kotlin generics
+            
+            Jenerikler, derleme zamanı tipi güvenliğini kontrol ederken farklı veri 
+            türleri kullanılarak erişilebilen sınıfları, yöntemleri ve özellikleri 
+            tanımlamamıza izin veren güçlü özelliklerdir.
+            
+            Parametreli sınıflar oluşturma: 
+            
+            Genel bir tür, türler üzerinde parametrelendirilen bir sınıf veya yöntemdir.
+            Programda type parametresini belirtmek için her zaman köşeli parantez () 
+            kullanırız.
+            
+            
+            class MyClass<T>(text: T) {
+                var name = text
+            }
+            
+            Böyle bir sınıfın bir instancesını/nesnesi oluşturmak için, tür argümanlarını
+            sağlamamız(provide etmemiz) gerekir:
+            
+            val my : MyClass<String> = Myclass<String>("GeeksforGeeks")
+            
+            Parametreler constructor argümanlarından çıkarılabiliyorsa, tür 
+            argümanlarının atlanmasına izin verilir:
+            
+            val my = MyClass("GeeksforGeeks") 
+            
+            Jenerik avantajları: 
+            
+            –Type casting'den kaçılabilir. - Nesneyi type cast etmeye gerek yoktur. 
+            -Type safety - generic, bir seferde yalnızca tek tip nesneye izin verir. 
+            -Derleme zamanı güvenliği - generic kod, çalıştırma zamanı hatasını önlemek 
+            için parametreli tür için derleme zamanında kontrol edilir.
+            
+            genericsiz kotlin:
+            
+            class Company (text: String) {
+                var x = text
+                init{
+                    println(x)
+                }
+            }
+            fun main(args: Array<String>){
+                var name: Company = Company("GeeksforGeeks")
+                var rank: Company = Company(12)// compile time error
+            }
+            
+            hata mesajı:
+            Error:(10, 33) Kotlin: The integer literal does not conform to the expected type String
+            
+            
+            generic kullanılarak:
+            
+            class Company<T> (text : T){
+                var x = text
+                init{
+                    println(x)
+                }
+            }
+            fun main(args: Array<String>){
+                var name: Company<String> = Company<String>("GeeksforGeeks")
+                var rank: Company<Int> = Company<Int>(12)
+            } 
+            
+            çıktı:
+            
+            GeeksforGeeks
+            1234
+            
+            
+            ----------------------------------------------------------------------------
+            
+            java ya da kotlinde app farklı dil seçeneklerine sahip olacaksa farklı 
+            strings.xml dosyaları açılır. strings.xml, strings.xml (de) gibi(almanca..).
+            
+            <resources>
+            <string name = "hello_world">Hallo Welt</string>
+            </resoruces>
+            
+            bu kadar. almanca olduğu zaman almanca strings içerisindeki hallo_world 
+            değişkeninin değeri Hallo Welt olacak. Bu yüzden yazıları strings.xml'de
+            tutmak lazım,öküz gibi sınıfların içine yazmamak lazım çeviri ihtiyacı varsa.
+            
+            Ayrıca örneğin compose'da; 
+            
+            Text(text = stringResource(id = R.string.hello_world)) 
+            
+            yazarak yanda çıkan uyarıya tıklayabilirsin. Böyle bir strings dosyası yok,
+            yaratayım mı diye sorar. Strings dosyasını kendin oluşturup içini doldurmana
+            gerek yok.
+            
+            ----------------------------------------------------------------------------
+            
+            Dizi	vs    ArrayList
+            
+            1.)
+            Dizi, dizi nesnesi oluşturulduktan sonra uzunluğu değiştirilemeyen sabit 
+            uzunluklu bir veri yapısıdır.	
+            
+            ArrayList doğada dinamiktir, bu da gerektiğinde büyümesi için yeniden 
+            boyutlandırılabileceği anlamına gelir.
+            
+            2.)
+            Bir dizinin boyutu program boyunca sabit kalır.	
+            
+            ArrayList'in boyutu yüke ve kapasiteye bağlı olarak dinamik olarak 
+            büyüyebilir.
+            
+            3.)
+            dizide Öğeleri depolamak için atama işleci kullanır. 
+            arraylistte Öğeleri eklemek için add () özelliğini kullanır.
+            
+            4.)
+            Aynı veya farklı veri türündeki nesnelerin yanı sıra ilkel öğeler içerebilir.
+            ArrayList'te temel öğelere izin verilmez. Yalnızca nesne türlerini içerebilir.
+            
+            5.)
+            Diziler ve Jenerikler el ele gitmez. 
+            ArrayList'te jeneriklere izin verilir.
+            
+            6.)
+            Diziler çok boyutlu olabilir.	
+            ArrayList tek boyutludur.
+            
+            7.)
+            Öğelerin bitişik bellek konumlarında depolandığı yerel bir programlama 
+            bileşenidir.	
+            Nesnelerin hiçbir zaman bitişik yerlerde saklanmadığı Java'nın koleksiyon 
+            çerçevesinden bir sınıftır.
+            
+            8.)
+            length değişkeni, Dizinin uzunluğunu belirlemek için kullanılır. 
+            ArrayList öğesinin boyutunu belirlemek için size () yöntemi kullanılır.
+            
+            9.)
+            Belirtilen öğeleri veya nesneleri depolamak için ArrayList'ten daha az 
+            bellek alır.	
+            Nesneleri depolamak için Diziden daha fazla bellek alır.
+            
+            9.)
+            Dizi üzerinde yineleme yapmak, ArrayList üzerinden yinelemekten daha hızlıdır
+            ArrayList üzerinden yineleme, performans açısından önemli ölçüde yavaştır.
+            
+            ----------------------------------------------------------------------------
+            
+            👉 ANR nedir?
+            
+            Android mülakat soruları arasında en önemlisi de ANR’nin ne olduğu 
+            üzerinedir. ANR (Application Not Responding), “Uygulama Yanıt Vermiyor” 
+            anlamına gelen ve sistem tarafından gösterilen bir dialogdur.
+            Bir uygulama uzun bir süre boyunca yanıt vermediğinde kullanıcıya görünen 
+            bir iletişim kutusudur.
+            
+            
+            ----------------------------------------------------------------------------
+            
+            👉 Content Provider nedir?
+            
+            Content Provider, uygulamalarda kullanılan yerel verileri başka bir 
+            uygulamanın kullanımına açılması durumunda veriler üzerinde değişiklik 
+            yapma üzerine kullanılan bir yapıdır.
+            
+            Content proviverlar, verinin saklanma ve iletilme yönteminden bağımsız olarak
+            veriyi güvenli bir şekilde diğer uygulamalara sunar. Content providerlar 
+            vasıtasıyla uygulamalar veriye direkt erişim sağlayabilirler. Örneğin; 
+            Calendar, SMS, Contact API’ları bu şekilde çalışmaktadır.
+            
+            -----------------------------------------------------------------------------
+            
+            Android Lifecycle
+            
+            onCreate () : Activity oluşturulur.
+            
+            onStart () : Bu geri çağırma yöntemi, activity kullanıcı tarafından görünür hale geldiğinde çağrılır.
+            
+            onResume () : Activity ön plandadır ve kullanıcı onunla etkileşim kurabilir.
+            
+            onPause () : Activity, başka bir etkinlik tarafından kısmen engellenmiştir. Ön plandaki diğer etkinlik yarı şeffaftır.
+            
+            onStop () : Activity tamamen gizlidir ve kullanıcı tarafından görülmez.
+            
+            onDestroy () : Activity yok edilir ve bellekten kaldırılır.
+            
+            -----------------------------------------------------------------------------
+            
+            👉 Android’in temel yapı taşları nelerdir?
+            
+            Activity: Aktivity, Android’deki herhangi bir uygulamanın ekran temsilidir. 
+            Her etkinliğin, kullanıcı arayüzünüzü yerleştirebileceğiniz bir düzen dosyası
+            vardır.
+            
+            Content Provider:  İçerik sağlayıcılar, uygulamalar arasında veri paylaşır.
+            
+            Service: Kullanıcı ile etkileşime girmeden uzun süreli işlemleri 
+            gerçekleştirmek için arka planda çalışan bir bileşendir ve uygulama yok 
+            edildiğinde bile çalışır.
+            
+            Broadcast: Diğer uygulamalardan veya sistemin kendisinden gelen yayın 
+            mesajlarına yanıt verir. Bu mesajlar bazen olaylar veya niyetler olarak 
+            adlandırılır.
+            
+            -----------------------------------------------------------------------------
+            
+            Android Mimarisi 4 temel bileşenden oluşur:
+            
+            Linux Kernel
+            Libraries
+            Android Framework
+            Android Applications
+            
+            -----------------------------------------------------------------------------
+            
+            
+            Android'te veri saklamak için kaç yol vardır ? 
+            
+            5 yol vardır. Shared preferences, Internal Storage, Local cache, 
+            External Storage, SQLite Database, Content Provider, Network Connection.
+            
+            -----------------------------------------------------------------------------
+            
+            SharedPreferences'e data yazarken commit() ve apply() methodlarının 
+            farkı nedir? 
+            
+            commit() syncronous gerçekleşirken apply() asyncronous gerçekleşir. 
+            Yani commit() çağrıldığında o işlemi hemen gerçekleştirir. apply() methodu 
+            da arka planda gerçekleşir.
+            
+            -----------------------------------------------------------------------------
+            
+            Fragmentlarda empty constructora ihtiyaç var mıdır? Neden? 
+            
+            Fragment oluştururken empty constructor'a ihtiyaç vardır. Bazı durumlarda 
+            (Screen rotation vs.) android frameworku fragmenti destroy edip tekrar 
+            yaratır. Bu durumda framework tarafında fragment'ın empty constructor'ı 
+            çağrılır. Eğer parametreli bir constructor eklemediysek empty constructor 
+            yaratmaya ihtiyaç yoktur çünkü bu durumda java compiler empty constructor'u 
+            kendi ekler. Fakat parametreli bir constructor tanımlarsak eğer bunun 
+            yanında empty constructor tanımlamak zorundayız.
+            
+            Parametreli bir constructor tanımlayıp empty constructor tanımlamazsak 
+            uygulamamız çalışmaz mı? Çalışır. Fakat rotation change vs. gibi android 
+            frameworkünün fragmenti yok edip tekrar yarattığı durumda 
+            android.support.v4.app.Fragment$InstantiationException hatası alırsınız.
+            
+            -----------------------------------------------------------------------------
+            
+            Kaç farklı veri taşıma yöntemi vardır? Bunlardan en performanslısı 
+            hangisidir?
+            
+            Interface ile veri taşıma
+            Bundle veya Intent ile veri taşıma
+            Parcelable ve serializable ile veri taşıma
+            Uzak sunucu ile veri taşıma
+            Shared Preferences ile veri taşıma
+            Static keyword veya singleton ile veri taşıma(Burada singleton’ın bir anti 
+            patern olduğunu mutlaka belirtin)
+            on activity result ile activityler arası veri taşıma
+            
+            En performanslı çalışan sorunun cevabı primitive tipler için Bundle veya 
+            Intent, referans tipliler için ise Parcelable ile veri taşımadır.
+            
+            -----------------------------------------------------------------------------
+            
+            Serialization ve deserialization nedir?
+            
+            Referans tipli bir classın nesnesinin bütün değişkenlerini ve constructor 
+            ile beraber stringe çevirme işlemine serialization denir. Daha sonra 
+            stringten classa çevirme işlemine de deserialization denir. Ek bilgi olarak 
+            parcelable ile serialization aynı işi yapıyor fakat parcelable 10 kat daha 
+            hızlıdır. Sebebi ise serialization bir java kütüphanesidir ve herhangi bir 
+            web, masaüstü projesinde kullanılır. Parcelable ise bir Android 
+            kütüphanesidir yani yalnızca Android projelerinde kullanılır. Son bir 
+            toparlama olarak da şöyle bir bilgi vereyim, primitive tip taşımak 
+            istiyorsak en hızlı veri taşıma yöntemi Intent veya Bundle , referans tipli 
+            bir değişken taşımak istiyorsak Parcelable işimizi görecektir.
+            
+            -----------------------------------------------------------------------------
+            
+            Fragmentlar neden hep frame layouta ekleniyor?
+            
+            Bilindiği üzere herhangi bir layouta da fragment eklenebilir ilk önce bu 
+            bilgiyi bilmekte fayda var. Neden hep frame layout sorusuna gelirsek, 
+            yapısı gereği layoutların içinde en az özellik sunan layout, frame 
+            layouttır ki zaten biz farklı bir layout eklesek de onun özelliklerini 
+            kullanmayacağız. Diğer layoutlara göre daha az işlemci gücü harcar ve bu da 
+            fragmentların frame layouta eklenmesinin nedenidir.
+            
+            -----------------------------------------------------------------------------
+            
+            Singleton Pattern nedir?
+            
+            İsminden de anlaşılacağı üzere singleton tasarım deseni, hazırlayacağımız 
+            sınıftan sadece bir örneğinin oluşturulmasını sağlar. Bu sayede nesnenin 
+            kopyalanmasını yada yeni bir tane oluşturmasını engeller ve nesneye ihtiyaç 
+            duyulduğunda o nesnenin daha önceden oluşturulan örneği çağırır. Veritabanı 
+            bağlantılarında, port bağlantılarında, yada dosya işlemleri gibi tek bir 
+            nesneye ihtiyaç duyduğumuz zamanlarda kullanırız.
+            
+            -----------------------------------------------------------------------------
+            
+            Solid prensipleri nedir?
+            
+            Bir metot veya bir class ne amaç ile yazılıyorsa içerikte o amaç ile ilgili 
+            kodların olması gerektiği prensip.
+            
+            -----------------------------------------------------------------------------
+            
+            Abstrack class ile interface arasında fark nedir?
+            
+            Interface’lerin bütün metotları implement etmek zorunludur
+            Abstrack classlarda sadece abstrack metotlar implement etmek zorunludur.
+            Interface’lerde can-do ilişkisi vardır.
+            Abstrack classlarda is-a ilişkisi vardır.
+            Bir sınıf sadece bir abstrack classı inherit edebilir.
+            Bir sınıf birden çok interface’i inherit edebilir
+            
+            -----------------------------------------------------------------------------
+            
+            Application nedir?
+            
+            Application class’ı Android’in temeli olarak görülebilir. Android’in 
+            gerçekleştirdiği diğer eylem ve hizmetlerin tüm bilgilerini barındıran ana 
+            class’dır. Program çalıştırıldığında Android’de her şeyden önce ilk bu 
+            class başlatılır.
+            
+            -----------------------------------------------------------------------------
+            
+            Android’in GUI’sının depolandığı yere ne ad verilir?
+            
+            Android’in GUI’sı “Android SDK” adlı bir yerde depolanır. Ne olduğunu şöyle 
+            bir örnekle açıklayalım. Bahçeye gitmeyi ve orada çalışmayı planladığınızı 
+            hayal edin. Neye ihtiyaç duyarsınız? Araçlara aletlere. Araçlar nerede 
+            saklanır? Çoğunlukla bir kulübede. Android SDK da bu kulübe gibidir. 
+            Geliştiricinin kolay erişimi için tüm gerekli ve önemli araçları içerisinde 
+            depolar.
+            
+            -----------------------------------------------------------------------------
+            
+            Implicit ve explicit intent’leri açıklayın.
+            
+            Implicit intent (üstü kapalı) kullanıldığında Android arayüzü işleminizi 
+            gerçekleştirmeye yardımcı olabilecek ayarlar için sistemi kontrol eder. Explicit intent (açık) ise işlem gerçekleştirilirken sisteminizin kullanması gereken bileşenleri belirtirsiniz. Basitleştirmek gerekirse sisteminize ne yapacağını söyler ve esnekliğe yer bırakmazsınız.
+            
+            -----------------------------------------------------------------------------
+            
+            Android hangi bytecode’u kullanır?
+            -dalvik.
+            
+            Android sisteminde adapter’lar, AdapterView’ı 
+            (kullanıldığı belli senaryolara göre ne olduğu değişir) harici bir veri 
+            kaynağıyla bağlamak için kullanılır.
+            
+            -----------------------------------------------------------------------------
+            
+            Soru 10: “AsyncTask” ve “Thread” arasındaki fark nedir?
+            AsyncTask’ler kısa süreli işlemlerle (en fazla 5 saniye) çalışmak için 
+            kullanılır. Thread’ler daha uzun işlemler içindir.
+            
+            -----------------------------------------------------------------------------
+            
+            
+            Android Design Patterns:
+            
+            1. Singleton--------------------------------
+            
+            
+            -kotlinde;
+            
+            object Singleton {
+            
+                fun doSomething(){
+            
+                }
+            
+            }
+            
+            -javada;
+            
+            public final class Singleton{
+             @NotNull
+            public static final Singleton INSTANCE; //singleton olacağı için static olur.
+            
+               public final void doSomething() {
+               }
+            
+               private Singleton() {
+               }
+            
+               static {
+                  Singleton var0 = new Singleton(); //singleton olduğu için hep 1 tane 
+                  INSTANCE = var0;                  //instance oluşturacak.  
+               }
+            
+            
+            }
+            
+            
+            2. Factory Pattern ---------------------------------
+            
+            benzer(aynı) type'lardaki nesnelerin hangisinin create edileceğini ayırt 
+            etmeye çalışır.
+            
+            yani farklı nesneler oluşturduk ama tipleri aynı, hangisin seçileceğine karar
+            veriliyor.
+            
+            
+            
+            
+            3. Builder Pattern ---------------------------------
+            
+            
+            
+            
+            4. Facade Pattern ---------------------------------
+            
+            
+            
+            Dependency Injection Pattern? ---------------------------------
+            
+            
+            
+            5. Adapter Pattern ---------------------------------
+            
+            
+            6. Abstract Factory Pattern---------------------------------
+            
+            
+            -----------------------------------------------------------------------------
+            
+            anti patterns
+            
+            
+            
+            
+            ------------------------------------MVVM------------------------------------
+            
+            Model - View - ViewModel.
+            Data Source - UI - Business Logic.
+            
+            Repository,ViewModel ve View'dan oluşur.ViewModel,Repo'ya request data(istek) 
+            atar. Repo'dan dönen datalar(return data) ViewModela ulaşır. Business 
+            logic işlemleri ViewModel'da gerçekleşir. en son sonuçlar ViewModel'dan 
+            View'a aktarılır ve View'da sadece görünümleri bağlama logic'i olur, 
+            business logic değil.
+            
+            Not: ViewModel kiminle iletişim halinde olduğundan haberdar olmamalıdır.
+            
+            
+            --------------------------------------------------------------
+            
+            HashSet, yinelenen değerlere izin vermez. HashMap, anahtar, 
+            değer çiftlerini saklar ve yinelenen anahtarlara izin vermez. 
+            Anahtar yineleniyorsa, eski anahtar yeni değerle değiştirilir.
+            </p>
+
+
+
+
+							</section>
+
+					</div>
+
+
+					
+
+
+				<!-- Footer -->
+				<footer id="footer">
+					<section>
+						<form action="https://formsubmit.co/b08daa73efb0824c10de3457bce379a3" method="POST">  <!-- mail için backend servis-->
+							<div class="fields">
+								<div class="field">
+									<label for="name">Name</label>
+									<input type="text" name="name" id="name" required/>
+								</div>
+								<div class="field">
+									<label for="email" style="color:rgb(230, 17, 17)" >Email *</label>
+									<input pattern='^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$' type="email" name="email" id="email" required/>
+								</div>
+								<div class="field">
+									<label for="message">Message</label>
+									<textarea name="message" id="message" rows="3" required></textarea>
+								</div>
+							</div>
+							<ul class="actions">
+								<li><input type="submit" value="Send Message" /></li>
+							</ul>
+						</form>
+					</section>
+					<section class="split contact">
+						<section class="alt">
+							<h3>Address</h3>
+							<p>Kocaeli/Turkey(Türkiye)<br />
+							  İstanbul/Turkey(Türkiye)</p>
+						</section>
+						<section>
+							<h3>Phone</h3>
+							<p><a href="tel:0507-999-6604">(0507) 999-6604</a></p>
+						</section>
+						<section>
+							<h3>Email</h3>
+							<p><a href="mailto: atilla734@gmail.com">atilla734@gmail.com</a></p>
+						</section>
+						<section>
+							<h3>Social</h3>
+							<ul class="icons alt">
+<!-- 			<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+							<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>  -->
+							<li><a href="https://www.linkedin.com/in/atilla-aydemir" target="_blank" class="icon brands fa-linkedin"><span class="label">Linkedin</span></a></li>
+							<li><a href="https://github.com/aliatillaydemir" target="_blank" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+							</ul>
+						</section>
+					</section>
+				</footer>
+
+			<!-- Copyright -->
+				<div id="copyright">
+					<ul><li>&copy; AttiTech</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+				</div>
+
+		</div>
+
+	<!-- Scripts -->
+		<script src="/assets/js/jquery.min.js"></script>
+		<script src="/assets/js/jquery.scrollex.min.js"></script>
+		<script src="/assets/js/jquery.scrolly.min.js"></script>
+		<script src="/assets/js/browser.min.js"></script>
+		<script src="/assets/js/breakpoints.min.js"></script>
+		<script src="/assets/js/util.js"></script>
+		<script src="/assets/js/main.js"></script>
+
+</body>
+</html>
