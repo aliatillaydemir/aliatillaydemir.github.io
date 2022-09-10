@@ -43,27 +43,149 @@
 
 						<!-- Post -->
 							<section class="post">
-				
+								
+								<header class="major">
+									<h1>Delegation 
+									</h1>
+								</header>
+
+								<br/>
+
+								<p>We need inheritance of more than one activity in base activity. It is necessary to combine them, but there is no multiple inheritance in kotlin. What are we gonna do?</p>
+								<p>Delegation is a design pattern. we use this pattern with by. When we use by lazy or by viewModel, we use the concept of delegation.</p>
+								<p>The base activity doesn't know exactly what's inside the class. Therefore, responsibility is not very clean when inheritance is used. So we can use delegation in this case.</p>
+								<p>Delegation Is Not Inheritance! in Kotlin, we can delegate not only to interfaces but to separate properties as well.</p>
+						
+								<br/><br/>
+
+								<h2>Why do we use delegation?</h2>
+
+								<li>It is a flexible, powerful as well as mutable method.</li>
+								<li>Multiple interfaces can be implemented with the help of the existing ones.</li>
+								<li>It is used to add new features and values to current implementations.</li>
+								
+								<br><br>
 
 
-						<!-- Preformatted Code -->
-									<h2>???</h2>
+								<span><img src="/images/Technical_image/delegate.png" alt="" /></span>
+
+								<br><br><br>
+
+								<h2>Code Example</h2>
+								<!-- Preformatted Code -->
 									<pre><code>
-	
-fun main(args: Array<String>) {
-
+interface Nameable{
+	var name : String
 }
+										
+class AtillaName : Nameable{
+	override var name:String ="Atilla"
+}
+										
+class LongDistanceRunner: Runnable{
+	override fun run() {
+		println("too long ago")
+	}
+}
+										
+class People(name:Nameable,runnable: Runnable): Nameable by name, Runnable by runnable
+										
+	fun main(args: Array<String>) {
+		val person = People(AtillaName(),LongDistanceRunner())
+		println(person.name)
+		person.run()
+	}
 </code></pre>
 <pre><code>
 Output: 
-
+Atilla
+too long ago
 </code></pre>
 
 <br/><br/><br/>
 
+<h2>INHERITANCE VS. DELEGATION</h2>
+<br>
 
+<li>Delegation can be an alternative to inheritance.</li>
+<li>Delegation means that you use an object of another class as an instance variable, and forward messages to the instance.</li>
+<li>It doesn’t force you to accept all the methods of the super class</li>
+<li>Run-time flexibility. The delegate can easily be changed at run-time.</li>
+<li>Unlike inheritance, delegation is not directly supported by most popular object-oriented languages(like java). Kotlin supports it.</li>
 
+<br><br>
 
+						<!-- Preformatted Code -->
+						<h3>inheritance</h3>
+									<pre><code>
+open class RealPrinter{  //open keyword is necessary for inheritance in kotlin unlike java
+	open fun print(){
+		println("printing data")
+	}
+}
+										
+class Printer : RealPrinter() {
+	override fun print(){
+		super.print() //parent's print func.
+	}
+}
+										
+fun main(args: Array<String>) {
+										
+	val printer = Printer()
+	printer.print()
+										
+}
+</code></pre>
+<pre><code>
+Output: 
+printing data
+</code></pre>
+
+<br>
+
+						<!-- Preformatted Code -->
+						<h3>delegation</h3>
+						<pre><code>
+open class RealPrinter{  //open keyword is necessary for inheritance in kotlin unlike java
+	open fun print(){
+		println("printing data")
+	}
+}
+							
+class Printer{
+	val p = RealPrinter()
+	fun print(){
+	p.print()
+		}
+}
+							
+fun main(args: Array<String>) {
+							
+	val printer = Printer()
+	printer.print()
+							
+}
+</code></pre>
+<pre><code>
+Output: 
+printing data
+</code></pre>
+<br>
+<h3>When to use what? </h3>
+<li>You want to be able to pass your class to an existing API expecting A’s then you need to use inheritance.</li>
+<li>You want to enhance A, but A is final and can no further be sub-classed then you need to use composition and delegation.</li>
+<li>You want functionality of a method and do not want to override the method then you should go for delegation.</li>
+
+<br/><br/><br/>
+<p>-> Some good resources on the subject:</p>
+<li><a href="https://kotlinlang.org/docs/delegation.html" style="color:blue">kotlinlang.org</a>    
+<br/>
+<li><a href="https://www.geeksforgeeks.org/delegation-vs-inheritance-java/" style="color:blue">geeksforgeeks(inheritance vs. delegate)</a>
+<br/>
+<li><a href="https://www.geeksforgeeks.org/delegation-in-kotlin/" style="color:blue">geeksforgeeks(delegation)</a>
+<br/>
+<li><a href="https://blog.frankel.ch/kotlin-delegation/" style="color:blue">blog.frankel.ch</a>	
 
 
 							</section>
