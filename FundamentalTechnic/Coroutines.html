@@ -1,0 +1,585 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>AttiTech-Software</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="/assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="Collections.html" class="logo">Refresh</a>
+					</header>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="/index.html">Main/Project Page</a></li>
+							<li class="active"><a href="/generic.html">fundamental software</a></li>
+							<li><a href="/information.html">information</a></li>
+							<li><a href="/elements.html">Template</a></li>
+						</ul>
+						<ul class="icons">
+	     <!-- 		        <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+							<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>  -->
+							<li><a href="https://www.linkedin.com/in/atilla-aydemir" target="_blank" class="icon brands fa-linkedin"><span class="label">Linkedin</span></a></li>
+							<li><a href="https://github.com/aliatillaydemir" target="_blank" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+				
+
+								<header class="major">
+									<h1>Coroutines </h1>
+								</header>
+
+
+                                <br/>
+
+								<p>Coroutines are not just a kotlin-specific concept, it's an Legacy concept.</p>
+								<p>There are no Coroutines in Java, but Kotlin has.</p>
+								<p>Coroutine is the structure used for asynchronous operations in long-running tasks and network operations or not to block UI.</p>
+								<p>Coroutines are also called light threads. Less energy, more work compared to threads (coroutines are in the thread pool, of course).</p>
+						
+								<br/><br/>
+
+
+
+
+<h2>Code Example</h2>
+<!-- Preformatted Code -->
+<pre><code>
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        GlobalScope.launch {
+            repeat(100_000){          //we created coroutine 100.000 time
+                launch {
+                    println("Coroutines are working!")
+                }
+            }
+        }
+
+    }
+}
+</code></pre>
+<pre><code>
+Output: 
+Coroutines are working!
+Coroutines are working!
+Coroutines are working!
+Coroutines are working!
+Coroutines are working!
+//...(100000 time)
+</code></pre>
+
+<br/><br/>
+
+<p>Scope: Code written inside a code block is under a scope.
+    The codes do not work in other scopes, there is no link.</p>
+
+<p>Scope in Coroutines: Scopes that determine where coroutines will be run and their lifecycle.</p>
+
+<li>Global Scope: The scope in which the whole application can be run within the application. we don't come across it very often because using a coroutine in the whole application often makes no sense.</li>
+<br>
+<li>runBlocking: Creating a scope by blocking. It stops the subsequent codes from running until the previous operations are finished. This doesn't come across much. It can be done if we have only one purpose, such as running a coroutine. Most of the time it doesn't make sense to block other code.</li>
+<br>
+<li>CoroutineScope: A scope is created and continues to run until all coroutines in it are finished. It is used frequently.</li>
+<br>
+<p>-Nested scopes can be used within each other.</p>
+<p>-launch keyword: Starts a new coroutine and does not block whatever current thread it contains.</p>
+<p>-We can start and change as many "launch" as we want.</p>
+
+<br>
+<!-- Preformatted Code -->
+<h3>runBlocking:</h3>
+<pre><code>
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        println("run block started")
+        runBlocking {
+            launch {  //start coroutine
+                println("run blocked")
+                delay(6000)
+            }
+        }
+        println("run block ended")
+
+    }
+}
+</code></pre>
+<pre><code>
+Output: 
+2022-09-11 14:56:59.279 9767-9767/me.king.androidApp I/System.out: run block started
+2022-09-11 14:56:59.306 9767-9767/me.king.androidApp I/System.out: run blocked
+2022-09-11 14:57:05.309 9767-9767/me.king.androidApp I/System.out: run block ended
+
+</code></pre>
+
+<br/><br/><br/>
+
+<!-- Preformatted Code -->
+<h3>global scope:</h3>
+<pre><code>
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        println("run block started")
+        GlobalScope.launch {
+            delay(6000)
+            println("global scope")
+        }
+        println("run block ended")
+
+    }
+}
+</code></pre>
+<pre><code>
+Output: 
+2022-09-11 15:01:35.010 9932-9932/me.king.androidApp I/System.out: run block started
+2022-09-11 15:01:35.045 9932-9932/me.king.androidApp I/System.out: run block ended
+2022-09-11 15:01:41.050 9932-9997/me.king.androidApp I/System.out: global scope
+</code></pre>
+
+<br/>
+
+<p>-Runblocking and global scope are different constructs. In run blocking, the process of the code block under launch, which is blocked, is expected to finish, then other operations are performed. In global scope, the process under launch runs in the background, processes that are due continue the processes.</p>
+
+<br><br><br>
+
+<h3>coroutineScope:</h3>
+
+<p>It is used in 2 ways. Suspend can be called within a function or in other scopes (which can be run with other coroutines).</p>
+
+<p>like;</p>
+<pre><code>
+ GlobalScope.launch {
+            coroutineScope { 
+                ...
+            } 
+        }
+</code></pre>
+
+<p>What contexts will CoroutineScope(//Context) work with?</p>
+<p>Coroutine(Dispatchers.Default) //Default, Main, IO, Unconfined.</p>
+
+<!-- Preformatted Code -->
+<pre><code>
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        //Context
+        println("Starting")
+        CoroutineScope(Dispatchers.Default).launch {
+            delay(5000)
+            println("coroutine Scope ...")
+        }
+        println("Ending")
+
+    }
+}
+</code></pre>
+<pre><code>
+Output: 
+2022-09-11 15:51:19.962 10520-10520/me.king.androidApp I/System.out: Starting
+2022-09-11 15:51:20.003 10520-10520/me.king.androidApp I/System.out: Ending
+2022-09-11 15:51:25.009 10520-10627/me.king.androidApp I/System.out: coroutine Scope ...
+</code></pre>
+
+<p>CoroutineScope is similar in structure to Global scope, but differs from it by not working in the whole application.</p>
+<p>CoroutineScope(Dispatcher.) is widely used.</p>
+<br/><br/><br/>
+
+
+<!-- Preformatted Code -->
+<h3>nested coroutines:</h3>
+<pre><code>
+fun main(){
+
+    runBlocking {
+        launch {
+            delay(5000)
+            println("run blocking...")
+        }
+
+        coroutineScope {
+            launch {
+                delay(2500)
+                println("it is coroutine scope")
+            }
+        }
+
+    }
+
+}
+</code></pre>
+<pre><code>
+Output: 
+it is coroutine scope
+run blocking...
+</code></pre>
+
+<p>2.5 seconds coroutineScope worked then run blocking. Why didn't it block runblocking?</p>
+<p>-Because the bottom coroutineScope is already inside runBlocking. runBlocking blocks outside.</p>
+
+<br/><br/><br/>
+
+<h3>Dispatchers:</h3>
+
+<p>Dispatchers can be used together.</p>
+
+<li>Default -> Cpu intensive. It is used for visual processing or when working with very large data.</li>
+<li>Main -> It is used for UI related interface operations that the user will see.</li>
+<li>IO -> input/output (used for networking operation)
+    Extracting data from internet, getting data from database etc. like retrofit...</li>
+<li>Unconfined -> Where it was created is inherited. It changes depending on where it is run.</li>
+
+<br><br>
+
+<pre><code>
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        runBlocking {
+
+            launch(Dispatchers.Main) {
+                println("Main Thread: ${Thread.currentThread().name}")
+            }
+
+            launch(Dispatchers.IO) {
+                println("IO Thread: ${Thread.currentThread().name}")
+            }
+
+            launch(Dispatchers.Default) {
+                println("Default Thread: ${Thread.currentThread().name}")
+            }
+
+            launch(Dispatchers.Unconfined) {
+                println("Unconfined Thread: ${Thread.currentThread().name}")
+            }
+
+        }
+
+    }
+}
+</code></pre>
+<pre><code>
+Output: 
+2022-09-11 17:09:56.286 12093-12156/me.king.androidApp I/System.out: IO Thread: DefaultDispatcher-worker-1
+2022-09-11 17:09:56.286 12093-12157/me.king.androidApp I/System.out: Default Thread: DefaultDispatcher-worker-2
+2022-09-11 17:09:56.286 12093-12093/me.king.androidApp I/System.out: Unconfined Thread: main
+</code></pre>
+<p>-Unconfined already worked as Main. we're already in the main, that thread didn't even come up.</p>
+<br/><br/><br/>
+
+<h3>SUSPEND FUN:</h3>
+<p>Suspend functions are functions that can be run in a coroutine. These functions are suspendable, they can be stopped and run at any time.</p>
+<p>If a function is running a coroutine, it must be a suspend function. Also, if there is another function that we call this function, it should be suspend or if it is not suspend, it should be written into the coroutine scope. So we have 2 options.</p>
+<!-- Preformatted Code -->
+<pre><code>
+fun main(){
+
+    runBlocking {
+        delay(2000)
+        println("run block working")
+        myfun()
+    }
+      //myfun() //error! cause main is not suspend function. if we make "suspend fun main", it will work. OR we can use this inside CoroutineScope like above.
+}
+
+suspend fun myfun() {
+    coroutineScope {
+        delay(3000)
+        println("suspend fun")
+    }
+}
+</code></pre>
+<pre><code>
+Output: 
+run block working
+suspend fun
+</code></pre>
+
+<br/><br/><br/>
+
+<h3>async</h3>
+<p>What happens when we use this instead of launch?</p>
+<p>Async actually expects a response. We will pull data from the internet, we do not know what and when we will pull it, so it is used for asynchronous processing.</p>
+
+<p>When we use launch, we can get an incorrect result as follows.</p>
+
+<!-- Preformatted Code -->
+<pre><code>
+fun main(){
+
+    var userName = ""
+    var userAge = 0
+
+    runBlocking {
+
+        launch {
+            val downloadedName = downloadName()
+            userName = downloadedName
+        }
+
+        launch {
+            val downloadedAge = downloadAge()
+            userAge = downloadedAge
+        }
+
+        println("$userName $userAge")
+    }
+
+}
+
+suspend fun downloadName():String{
+    delay(2000)
+    val userName = "Ati"
+    println("username download")
+    return userName
+}
+
+suspend fun downloadAge():Int{
+    delay(4000)
+    val userAge = 23
+    println("userAge Download")
+    return userAge
+}
+</code></pre>
+<pre><code>
+Output: 
+0
+username download
+userAge Download
+</code></pre>
+<p>Why is this happening? Because they work at different times. That's exactly why async should be used. We will use async instead of launch to sync.</p>
+<br/><br/><br/>
+
+
+<!-- Preformatted Code -->
+<h3>Async</h3>
+<pre><code>
+
+fun main(){
+
+    var userName = ""
+    var userAge = 0
+
+    runBlocking {
+        val downloadedName = async {
+            downloadName()
+        }
+
+        val downloadAge = async {
+            downloadAge()
+        }
+
+        userName = downloadedName.await()
+        userAge = downloadAge.await()
+
+        println(userName +"   "+ userAge)
+
+    }
+
+}
+
+suspend fun downloadName():String{
+    delay(2000)
+    val userName = "Ati"
+    println("username download")
+    return userName
+}
+
+suspend fun downloadAge():Int{
+    delay(4000)
+    val userAge = 23
+    println("userAge Download")
+    return userAge
+}
+</code></pre>
+<pre><code>
+Output: 
+username download
+userAge Download
+Ati   23
+</code></pre>
+<p>We made them wait with await() and keep them in sync. So we solved the problem by using async instead of suspend.</p>
+<br/><br/><br/>
+
+<h3>Job</h3>
+<p>We can equate launch to job and return job. We can control these returned jobs. Like canceling, starting...</p>
+<!-- Preformatted Code -->
+<pre><code>
+fun main(){
+
+    runBlocking {
+     val myJob = launch {
+            delay(2000)
+            println("job")
+
+         val secondJob = launch {  //we can create a second job in any job
+             println("job2")
+         }
+        }
+
+        myJob.invokeOnCompletion {  //myJob is complete. what we doing?
+            println("job is complete")
+        }
+
+        //myJob.cancel()  if we cancel myJob, secondJob is not working cause, secondJob is inside myJob.
+
+    }
+</code></pre>
+<pre><code>
+Output: 
+job
+job2
+job is complete
+</code></pre>
+
+<br/><br/><br/>
+
+<h3>withContext</h3>
+<p>How do we switch from one dispatcher to another?</p>
+<p>With "withContext" we can operate in the same launch or in the same scope in different threads.</p>
+<p>We see this most often in examples where we start with Dispatchers.IO and end with Dispatchers.Main.</p>
+<!-- Preformatted Code -->
+<pre><code>
+fun main(){
+
+    runBlocking { 
+        
+        launch(Dispatchers.Default) { 
+            println("Context: $coroutineContext")
+            withContext(Dispatchers.IO){
+                println("Context: $coroutineContext")
+            }
+        }
+        
+    }
+
+}
+</code></pre>
+<pre><code>
+Output: 
+Context: [StandaloneCoroutine{Active}@40905687, Dispatchers.Default]
+Context: [DispatchedCoroutine{Active}@69a36fb7, Dispatchers.IO]
+</code></pre>
+
+<br/><br/><br/>
+
+<!--
+<pre><code>
+
+</code></pre>
+<pre><code>
+Output: 
+
+</code></pre>
+
+<br/><br/><br/>
+-->
+
+
+							</section>
+
+					</div>
+
+
+					
+
+
+				<!-- Footer -->
+				<footer id="footer">
+					<section>
+						<form action="https://formsubmit.co/b08daa73efb0824c10de3457bce379a3" method="POST">  <!-- mail için backend servis-->
+							<div class="fields">
+								<div class="field">
+									<label for="name">Name</label>
+									<input type="text" name="name" id="name" required/>
+								</div>
+								<div class="field">
+									<label for="email" style="color:rgb(230, 17, 17)" >Email *</label>
+									<input pattern='^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$' type="email" name="email" id="email" required/>
+								</div>
+								<div class="field">
+									<label for="message">Message</label>
+									<textarea name="message" id="message" rows="3" required></textarea>
+								</div>
+							</div>
+							<ul class="actions">
+								<li><input type="submit" value="Send Message" /></li>
+							</ul>
+						</form>
+					</section>
+					<section class="split contact">
+						<section class="alt">
+							<h3>Address</h3>
+							<p>Kocaeli/Turkey(Türkiye)<br />
+							  İstanbul/Turkey(Türkiye)</p>
+						</section>
+						<section>
+							<h3>Phone</h3>
+							<p><a href="tel:0507-999-6604">(0507) 999-6604</a></p>
+						</section>
+						<section>
+							<h3>Email</h3>
+							<p><a href="mailto: atilla734@gmail.com">atilla734@gmail.com</a></p>
+						</section>
+						<section>
+							<h3>Social</h3>
+							<ul class="icons alt">
+<!-- 			<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+							<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>  -->
+							<li><a href="https://www.linkedin.com/in/atilla-aydemir" target="_blank" class="icon brands fa-linkedin"><span class="label">Linkedin</span></a></li>
+							<li><a href="https://github.com/aliatillaydemir" target="_blank" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+							</ul>
+						</section>
+					</section>
+				</footer>
+
+			<!-- Copyright -->
+				<div id="copyright">
+					<ul><li>&copy; AttiTech</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+				</div>
+
+		</div>
+
+	<!-- Scripts -->
+		<script src="/assets/js/jquery.min.js"></script>
+		<script src="/assets/js/jquery.scrollex.min.js"></script>
+		<script src="/assets/js/jquery.scrolly.min.js"></script>
+		<script src="/assets/js/browser.min.js"></script>
+		<script src="/assets/js/breakpoints.min.js"></script>
+		<script src="/assets/js/util.js"></script>
+		<script src="/assets/js/main.js"></script>
+
+</body>
+</html>
