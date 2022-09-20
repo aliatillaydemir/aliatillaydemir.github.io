@@ -336,6 +336,46 @@ ARI
 
 <br/><br/><br/>
 
+<!-- Preformatted Code -->
+<h2>run</h2>
+<p>Run method is very important for nullable safety.</p>
+<pre><code>
+class ClassRoom(){
+    lateinit var names: String
+    lateinit var teachers: String
+    lateinit var schools: String
+}
+
+fun main(){
+   println("ClassRoom name: ")
+   var classRoom: ClassRoom? = null
+
+    classRoom?.run {
+        print(names)     //Not print on the screen cause object is null.
+    }
+
+    print("ClassRoom name: ")
+
+    classRoom = ClassRoom().apply {
+        names = "Merve Grealish"
+        teachers = "Mete Cengiz namıtürk"
+        schools = "Atatürk University"
+    }
+
+    classRoom.run { //successful.
+        print(names)
+    }
+
+}
+</code></pre>
+<pre><code>
+Output:
+ClassRoom name: 
+ClassRoom name: Merve Grealish
+</code></pre>
+<p>When the classRoom value is null, the body of the run is simply ignored. When it is non-null, the body executes.</p>
+<br/><br/><br/>
+
 								<!-- Preformatted Code -->
 								<h2>with</h2>
 								<p>The class/object is put inside the with function. Since this function returns unit type it might be better to put the variable.</p>
@@ -383,7 +423,18 @@ Output:
 ARI 43
 </code></pre>
 
+
 <br/><br/><br/>
+
+<h2>Summary</h2>
+<li>let: working with nullable objects to avoid NullPointerException.</li>
+<li>apply: changing object configuration.</li>
+<li>run: operate on nullable object, executing lambda expressions.</li>
+<li>also: adding additional operations.</li>
+<li>with: operating on non-null objects.</li>
+
+<br/><br/><br/>
+
 
 <!-- Table -->
 <h2>Function selection</h2>
@@ -445,9 +496,11 @@ ARI 43
 
 <br/><br/><br/>
 <p>-> Some good resources on the subject:</p>
-<li><a href="https://kotlinlang.org/docs/scope-functions.html" style="color:blue">kotlinlang.org</a>    
+<li><a href="https://kotlinlang.org/docs/scope-functions.html" target="_blank" style="color:blue">kotlinlang.org</a>    
 <br/>
-<li><a href="https://www.digitalocean.com/community/tutorials/kotlin-let-run-also-apply-with#kotlin-let" style="color:blue">digitalocean</a>
+<li><a href="https://www.digitalocean.com/community/tutorials/kotlin-let-run-also-apply-with#kotlin-let" target="_blank" style="color:blue">digitalocean</a>
+<br>	
+<li><a href="https://www.geeksforgeeks.org/kotlin-scope-function/" target="_blank" style="color:blue">geeksforgeeks</a>
 
 							</section>
 
